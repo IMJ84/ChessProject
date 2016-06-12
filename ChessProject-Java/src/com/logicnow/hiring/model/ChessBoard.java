@@ -91,8 +91,7 @@ public class ChessBoard {
      * piece in the correct position of the pieces array and nulls the original
      * position.
      * 
-     * This method should be called from a controller class method upon a
-     * successful call to a piece's move method.
+     * This method allows the piece objects on the board to issue updates to their position.
      * 
      * @param piece
      * @param originalXCoordinate
