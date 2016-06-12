@@ -4,10 +4,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.logicnow.hiring.constants.PieceColor;
-import com.logicnow.hiring.model.ChessBoard;
-import com.logicnow.hiring.model.ChessPiece;
-import com.logicnow.hiring.model.Pawn;
+import com.logicnow.hiring.constants.PieceColour;
 
 import junit.framework.TestCase;
 
@@ -61,11 +58,17 @@ public class ChessBoardTest extends TestCase {
     }
 
     @Test
+    public void testIsLegalBoardPosition_False_X_equals_8_Y_equals_8() {
+        boolean isValidPosition = testSubject.isLegalBoardPosition(8, 8);
+        assertFalse(isValidPosition);
+    }
+
+    @Test
     public void testIsLegalBoardPosition_False_For_Negative_Y_Values() {
         boolean isValidPosition = testSubject.isLegalBoardPosition(5, -1);
         Assert.assertFalse(isValidPosition);
     }
-    
+
     @Test
     public void testIsLegalBoardPosition_False_For_Negative_X_Values() {
         boolean isValidPosition = testSubject.isLegalBoardPosition(-1, 5);
@@ -74,10 +77,10 @@ public class ChessBoardTest extends TestCase {
 
     @Test
     public void testAvoids_Duplicate_Positioning() {
-        Pawn firstPawn = new Pawn(PieceColor.BLACK);
-        Pawn secondPawn = new Pawn(PieceColor.BLACK);
-        testSubject.add(firstPawn, 6, 3, PieceColor.BLACK);
-        testSubject.add(secondPawn, 6, 3, PieceColor.BLACK);
+        Pawn firstPawn = new Pawn(PieceColour.BLACK);
+        Pawn secondPawn = new Pawn(PieceColour.BLACK);
+        testSubject.add(firstPawn, 6, 3, PieceColour.BLACK);
+        testSubject.add(secondPawn, 6, 3, PieceColour.BLACK);
         assertEquals(6, firstPawn.getXCoordinate());
         assertEquals(3, firstPawn.getYCoordinate());
         assertEquals(-1, secondPawn.getXCoordinate());
@@ -85,45 +88,40 @@ public class ChessBoardTest extends TestCase {
     }
 
     @Test
-    public void testLimits_The_Number_Of_Pawns()
-    {
-        for (int i = 0; i < 10; i++)
-        {
-            Pawn pawn = new Pawn(PieceColor.BLACK);
+    public void testLimits_The_Number_Of_Pawns() {
+        for (int i = 0; i < 10; i++) {
+            Pawn pawn = new Pawn(PieceColour.BLACK);
             int row = i / ChessBoard.MAX_BOARD_ROWS;
-            testSubject.add(pawn, 6 + row, i % ChessBoard.MAX_BOARD_COLUMNS, PieceColor.BLACK);
-            if (row < 1)
-            {
+            testSubject.add(pawn, 6 + row, i % ChessBoard.MAX_BOARD_COLUMNS, PieceColour.BLACK);
+            if (row < 1) {
                 assertEquals(6 + row, pawn.getXCoordinate());
                 assertEquals(i % ChessBoard.MAX_BOARD_COLUMNS, pawn.getYCoordinate());
-            }
-            else
-            {
+            } else {
                 assertEquals(-1, pawn.getXCoordinate());
                 assertEquals(-1, pawn.getYCoordinate());
             }
         }
     }
-    
+
     @Test
     public void testUpdatePiecePosition_Sets_Piece_In_Array() {
-    	Pawn pawn = new Pawn(PieceColor.WHITE);
-    	testSubject.add(pawn, 1, 1, PieceColor.WHITE);
-    	testSubject.updatePiecePosition(pawn, 1, 1, 2, 1);
-    	
-    	ChessPiece[][] pieces = testSubject.getPieces();
-    	
-    	assertEquals(pawn, pieces[2][1]);
+        Pawn pawn = new Pawn(PieceColour.WHITE);
+        testSubject.add(pawn, 1, 1, PieceColour.WHITE);
+        testSubject.updatePiecePosition(pawn, 1, 1, 2, 1);
+
+        ChessPiece[][] pieces = testSubject.getPieces();
+
+        assertEquals(pawn, pieces[2][1]);
     }
-    
+
     @Test
     public void testUpdatePiecePosition_Nulls_Original_Position_In_Array() {
-    	Pawn pawn = new Pawn(PieceColor.WHITE);
-    	testSubject.add(pawn, 1, 1, PieceColor.WHITE);
-    	testSubject.updatePiecePosition(pawn, 1, 1, 2, 1);
-    	
-    	ChessPiece[][] pieces = testSubject.getPieces();
-    	
-    	assertEquals(null, pieces[1][1]);
+        Pawn pawn = new Pawn(PieceColour.WHITE);
+        testSubject.add(pawn, 1, 1, PieceColour.WHITE);
+        testSubject.updatePiecePosition(pawn, 1, 1, 2, 1);
+
+        ChessPiece[][] pieces = testSubject.getPieces();
+
+        assertNull(pieces[1][1]);
     }
 }

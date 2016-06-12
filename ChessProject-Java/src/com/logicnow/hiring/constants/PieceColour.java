@@ -6,7 +6,7 @@ package com.logicnow.hiring.constants;
  * @author IMJ84
  *
  */
-public enum PieceColor {
+public enum PieceColour {
 
     BLACK, WHITE;
 
