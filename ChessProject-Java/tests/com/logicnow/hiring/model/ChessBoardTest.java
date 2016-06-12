@@ -1,4 +1,4 @@
-package com.logicnow.hiring;
+package com.logicnow.hiring.model;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import com.logicnow.hiring.constants.PieceColor;
 import com.logicnow.hiring.model.ChessBoard;
+import com.logicnow.hiring.model.ChessPiece;
 import com.logicnow.hiring.model.Pawn;
 
 import junit.framework.TestCase;
@@ -21,7 +22,7 @@ public class ChessBoardTest extends TestCase {
 
     @Test
     public void testHas_MaxBoardWidth_of_8() {
-        assertEquals(8, ChessBoard.MAX_BOARD_HEIGHT);
+        assertEquals(8, ChessBoard.MAX_BOARD_WIDTH);
     }
 
     @Test
@@ -64,9 +65,15 @@ public class ChessBoardTest extends TestCase {
         boolean isValidPosition = testSubject.isLegalBoardPosition(5, -1);
         Assert.assertFalse(isValidPosition);
     }
+    
+    @Test
+    public void testIsLegalBoardPosition_False_For_Negative_X_Values() {
+        boolean isValidPosition = testSubject.isLegalBoardPosition(-1, 5);
+        Assert.assertFalse(isValidPosition);
+    }
 
     @Test
-    public void Avoids_Duplicate_Positioning() {
+    public void testAvoids_Duplicate_Positioning() {
         Pawn firstPawn = new Pawn(PieceColor.BLACK);
         Pawn secondPawn = new Pawn(PieceColor.BLACK);
         testSubject.add(firstPawn, 6, 3, PieceColor.BLACK);
@@ -83,7 +90,7 @@ public class ChessBoardTest extends TestCase {
         for (int i = 0; i < 10; i++)
         {
             Pawn pawn = new Pawn(PieceColor.BLACK);
-            int row = i / ChessBoard.MAX_BOARD_WIDTH;
+            int row = i / ChessBoard.MAX_BOARD_HEIGHT;
             testSubject.add(pawn, 6 + row, i % ChessBoard.MAX_BOARD_WIDTH, PieceColor.BLACK);
             if (row < 1)
             {
@@ -96,5 +103,27 @@ public class ChessBoardTest extends TestCase {
                 assertEquals(-1, pawn.getYCoordinate());
             }
         }
+    }
+    
+    @Test
+    public void testUpdatePiecePosition_Sets_Piece_In_Array() {
+    	Pawn pawn = new Pawn(PieceColor.WHITE);
+    	testSubject.add(pawn, 1, 1, PieceColor.WHITE);
+    	testSubject.updatePiecePosition(pawn, 1, 1, 2, 1);
+    	
+    	ChessPiece[][] pieces = testSubject.getPieces();
+    	
+    	assertEquals(pawn, pieces[2][1]);
+    }
+    
+    @Test
+    public void testUpdatePiecePosition_Nulls_Original_Position_In_Array() {
+    	Pawn pawn = new Pawn(PieceColor.WHITE);
+    	testSubject.add(pawn, 1, 1, PieceColor.WHITE);
+    	testSubject.updatePiecePosition(pawn, 1, 1, 2, 1);
+    	
+    	ChessPiece[][] pieces = testSubject.getPieces();
+    	
+    	assertEquals(null, pieces[1][1]);
     }
 }

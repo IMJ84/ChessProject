@@ -30,6 +30,10 @@ public class ChessBoard {
         	pieceCounts.put(color, counts);
         }
     }
+    
+    public ChessPiece[][] getPieces() {
+    	return pieces;
+    }
 
     /**
      * Add a piece to the board. First needs to check that the position is legal, there is no piece already occupying the space,
@@ -63,6 +67,14 @@ public class ChessBoard {
         }
     }
 
+    /**
+     * A method to check if a given set of coordinates is a valid position on the board, i.e. it is within the width and height
+     * and the coordinates are non-negative.
+     * 
+     * @param xCoordinate
+     * @param yCoordinate
+     * @return
+     */
     public boolean isLegalBoardPosition(int xCoordinate, int yCoordinate) {
         if ((xCoordinate >= 0) && (yCoordinate >= 0) && (xCoordinate <= MAX_BOARD_WIDTH) && (yCoordinate <= MAX_BOARD_HEIGHT)) {
         	return true;
@@ -71,7 +83,31 @@ public class ChessBoard {
         return false;
     }
     
-    public boolean withinPieceLimits(PieceType pieceType, PieceColor pieceColor) {
+    /**
+     * A method to update the position of a piece on the board. Sets the given piece in the correct position of the pieces array and
+     * nulls the original position.
+     * 
+     * This method should be called from a controller class method upon a successful call to a piece's move method.
+     * 
+     * @param piece
+     * @param originalXCoordinate
+     * @param originalYCoordinate
+     * @param newXCoordinate
+     * @param newYCoordinate
+     */
+    public void updatePiecePosition(ChessPiece piece, int originalXCoordinate, int originalYCoordinate, int newXCoordinate, int newYCoordinate) {
+    	pieces[newXCoordinate][newYCoordinate] = piece;
+    	pieces[originalXCoordinate][originalYCoordinate] = null;
+    }
+    
+    /**
+     * A method to check if the board already contains the maximum number of the given piece in the given colour.
+     * 
+     * @param pieceType
+     * @param pieceColor
+     * @return
+     */
+    private boolean withinPieceLimits(PieceType pieceType, PieceColor pieceColor) {
     	int numMatchingPieces = pieceCounts.get(pieceColor).get(pieceType);
     	
     	if (numMatchingPieces < pieceType.getMaxNumber()) {

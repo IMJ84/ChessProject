@@ -70,7 +70,33 @@ public abstract class ChessPiece {
     @Override
     public String toString() {
     	String eol = System.lineSeparator();
-        return String.format("Current X: {1}{0}Current Y: {2}{0}Piece Color: {3}", eol, xCoordinate, yCoordinate, pieceColor);
+        return String.format("Current X: %d%sCurrent Y: %d%sPiece Color: %s%sPiece Type: %s", xCoordinate, eol, yCoordinate, eol, pieceColor, eol, pieceType);
+    }
+    
+    /**
+     * A method that checks whether a proposed move is legal and then performs the move. This should be called from concrete implementations of
+     * the move() method.
+     * 
+     * The "valid" coordinates represent a valid position that the piece can move to based upon the piece's movement rules.
+     * The "new" coordinates represent that position that the piece is intended to be moved to.
+     * 
+     * @param validX
+     * @param validY
+     * @param newX
+     * @param newY
+     * @return A boolean indicating if the move was successful or not.
+     */
+    protected boolean checkMoveIsLegalAndPerform(int validX, int validY, int newX, int newY) {
+    	// ensure that the new position is valid on the board and matches the proposed position
+		if (chessBoard.isLegalBoardPosition(validX, validY) && (validX == newX) && (validY == newY)) {
+			// update piece coordinates
+			this.setXCoordinate(newX);
+			this.setYCoordinate(newY);
+			
+			return true;
+		}
+		
+		return false;
     }
 
     /**
@@ -79,6 +105,7 @@ public abstract class ChessPiece {
      * @param movementType
      * @param newX
      * @param newY
+     * @return A boolean indicating if the move was successful or not.
      */
-    public abstract void move(MovementType movementType, int newX, int newY);
+    public abstract boolean move(MovementType movementType, int newX, int newY);
 }
