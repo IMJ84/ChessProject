@@ -8,14 +8,15 @@ import com.logicnow.hiring.constants.PieceType;
 
 public class ChessBoard {
 
-    public static final int MAX_BOARD_WIDTH = 8;
-    public static final int MAX_BOARD_HEIGHT = 8;
+	// These have been renamed to avoid x/y confusion - in this exercise X is the row, Y the column
+    public static final int MAX_BOARD_COLUMNS = 8;
+    public static final int MAX_BOARD_ROWS = 8;
 
     private ChessPiece[][] pieces;
     private Map<PieceColor, Map<PieceType, Integer>> pieceCounts;
 
     public ChessBoard() {
-        pieces = new ChessPiece[MAX_BOARD_WIDTH][MAX_BOARD_HEIGHT];
+        pieces = new ChessPiece[MAX_BOARD_ROWS][MAX_BOARD_COLUMNS];
 
         pieceCounts = new HashMap<PieceColor, Map<PieceType, Integer>>();
         
@@ -76,7 +77,7 @@ public class ChessBoard {
      * @return
      */
     public boolean isLegalBoardPosition(int xCoordinate, int yCoordinate) {
-        if ((xCoordinate >= 0) && (yCoordinate >= 0) && (xCoordinate <= MAX_BOARD_WIDTH) && (yCoordinate <= MAX_BOARD_HEIGHT)) {
+        if ((xCoordinate >= 0) && (yCoordinate >= 0) && (xCoordinate <= MAX_BOARD_ROWS) && (yCoordinate <= MAX_BOARD_COLUMNS)) {
         	return true;
         }
         

@@ -22,12 +22,12 @@ public class ChessBoardTest extends TestCase {
 
     @Test
     public void testHas_MaxBoardWidth_of_8() {
-        assertEquals(8, ChessBoard.MAX_BOARD_WIDTH);
+        assertEquals(8, ChessBoard.MAX_BOARD_COLUMNS);
     }
 
     @Test
     public void testHas_MaxBoardHeight_of_8() {
-        assertEquals(8, ChessBoard.MAX_BOARD_HEIGHT);
+        assertEquals(8, ChessBoard.MAX_BOARD_ROWS);
     }
 
     @Test
@@ -90,12 +90,12 @@ public class ChessBoardTest extends TestCase {
         for (int i = 0; i < 10; i++)
         {
             Pawn pawn = new Pawn(PieceColor.BLACK);
-            int row = i / ChessBoard.MAX_BOARD_HEIGHT;
-            testSubject.add(pawn, 6 + row, i % ChessBoard.MAX_BOARD_WIDTH, PieceColor.BLACK);
+            int row = i / ChessBoard.MAX_BOARD_ROWS;
+            testSubject.add(pawn, 6 + row, i % ChessBoard.MAX_BOARD_COLUMNS, PieceColor.BLACK);
             if (row < 1)
             {
                 assertEquals(6 + row, pawn.getXCoordinate());
-                assertEquals(i % ChessBoard.MAX_BOARD_WIDTH, pawn.getYCoordinate());
+                assertEquals(i % ChessBoard.MAX_BOARD_COLUMNS, pawn.getYCoordinate());
             }
             else
             {
