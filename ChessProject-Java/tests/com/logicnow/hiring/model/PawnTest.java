@@ -1,8 +1,10 @@
 package com.logicnow.hiring.model;
 
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -88,6 +90,42 @@ public class PawnTest {
         testSubject.move(MovementType.MOVE, 4, 3);
         assertEquals(6, testSubject.getXCoordinate());
         assertEquals(3, testSubject.getYCoordinate());
+    }
+    
+    @Test
+    public void testGetValidMoves_Black() {
+    	// In this exercise, a pawn only has one valid move - one space forward
+    	chessBoard.add(testSubject, 6, 3, PieceColor.BLACK);
+        List<Position> moves = testSubject.getValidMoves(MovementType.MOVE);
+        
+        assertEquals(1, moves.size());
+        
+        Position move = moves.get(0);
+        
+        assertEquals(5, move.getXCoordinate());
+        assertEquals(3, move.getYCoordinate());
+    }
+    
+    @Test
+    public void testGetValidMoves_White() {
+    	// In this exercise, a pawn only has one valid move - one space forward
+    	chessBoard.add(testSubject2, 1, 3, PieceColor.WHITE);
+        List<Position> moves = testSubject2.getValidMoves(MovementType.MOVE);
+        
+        assertEquals(1, moves.size());
+        
+        Position move = moves.get(0);
+        
+        assertEquals(2, move.getXCoordinate());
+        assertEquals(3, move.getYCoordinate());
+    }
+    
+    @Test
+    public void testGetValidMoves_No_Moves_Edge_Of_Board() {
+    	chessBoard.add(testSubject, 0, 3, PieceColor.BLACK);
+        List<Position> moves = testSubject.getValidMoves(MovementType.MOVE);
+        
+        assertEquals(0, moves.size());
     }
     
     @Test

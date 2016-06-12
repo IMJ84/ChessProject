@@ -1,5 +1,7 @@
 package com.logicnow.hiring.model;
 
+import java.util.List;
+
 import com.logicnow.hiring.constants.MovementType;
 import com.logicnow.hiring.constants.PieceColor;
 import com.logicnow.hiring.constants.PieceType;
@@ -72,40 +74,41 @@ public abstract class ChessPiece {
     	String eol = System.lineSeparator();
         return String.format("Current X: %d%sCurrent Y: %d%sPiece Color: %s%sPiece Type: %s", xCoordinate, eol, yCoordinate, eol, pieceColor, eol, pieceType);
     }
-    
-    /**
-     * A method that checks whether a proposed move is legal and then performs the move. This should be called from concrete implementations of
-     * the move() method.
-     * 
-     * The "valid" coordinates represent a valid position that the piece can move to based upon the piece's movement rules.
-     * The "new" coordinates represent that position that the piece is intended to be moved to.
-     * 
-     * @param validX
-     * @param validY
-     * @param newX
-     * @param newY
-     * @return A boolean indicating if the move was successful or not.
-     */
-    protected boolean checkMoveIsLegalAndPerform(int validX, int validY, int newX, int newY) {
-    	// ensure that the new position is valid on the board and matches the proposed position
-		if (chessBoard.isLegalBoardPosition(validX, validY) && (validX == newX) && (validY == newY)) {
-			// update piece coordinates
-			this.setXCoordinate(newX);
-			this.setYCoordinate(newY);
-			
-			return true;
-		}
-		
-		return false;
-    }
 
     /**
-     * Abstract movement method. Each type of chess piece will have its own movement mechanism, requiring its own movement method definition.
+     * Main movement method. Calls the concrete implementation of the getValidMoves() method and then checks if
+     * the proposed move coordinates match any of those moves. If so, updates the piece coordinates and returns
+     * true to indicate a successful move.
      * 
      * @param movementType
      * @param newX
      * @param newY
      * @return A boolean indicating if the move was successful or not.
      */
-    public abstract boolean move(MovementType movementType, int newX, int newY);
+    public boolean move(MovementType movementType, int newX, int newY) {
+    	List<Position> availableMoves = getValidMoves(movementType);
+    	
+    	// loop through the available moves and check if any match the proposed move
+    	for (Position potentialMove: availableMoves) {
+    		if (newX == potentialMove.getXCoordinate() && newY == potentialMove.getYCoordinate()) {
+    			// update piece coordinates
+    			this.setXCoordinate(newX);
+    			this.setYCoordinate(newY);
+    			
+    			return true;
+    		}
+    	}
+    	
+    	// if no matching moves, return false
+    	return false;
+    }
+    
+    /**
+     * A method that returns a list of Position objects, representing all available moves that the piece can make. Each piece type will have
+     * its own rules determining the set of potential moves.
+     * 
+     * @param movementType
+     * @return
+     */
+    public abstract List<Position> getValidMoves(MovementType movementType);
 }
