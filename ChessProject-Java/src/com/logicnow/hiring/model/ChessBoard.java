@@ -51,7 +51,7 @@ public class ChessBoard {
 
         PieceType pieceType = piece.getPieceType();
 
-        if (withinPieceLimits(piece.getPieceType(), pieceColour) && isLegalBoardPosition(xCoordinate, yCoordinate) && (pieces[xCoordinate][yCoordinate] == null)) {
+        if (withinPieceLimits(pieceType, pieceColour) && isLegalBoardPosition(xCoordinate, yCoordinate) && (pieces[xCoordinate][yCoordinate] == null)) {
             pieces[xCoordinate][yCoordinate] = piece;
 
             // update coordinates of the piece and set the board

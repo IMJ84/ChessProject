@@ -1,0 +1,23 @@
+General Notes
+=============
+
+As part of this exercise I have implemented the following key features in the application:
+
+* Introduced an abstract "ChessPiece" class to represent a generic chess piece, with implementations of 
+  all standard shared functionality across pieces, along with an abstract method for determining the list
+  of valid moves for different piece types. This will simplify the implementation of other piece types.
+* Moved the piece and board classes into a "model" package as the first stage of an MVC pattern implementation.
+  The implementation of a game controller and views was outside the scope of this exercise but would represent 
+  a logical next step in the development.
+* The ChessBoard and ChessPiece classes are a basic implementation of the Observer pattern, in that the board is 
+  registered as an observer of the pieces and will receive updates when a piece is moved.
+  
+As part of the exercise I noticed that some of the unit tests had an inconsistent approach to the meaning of the
+X and Y axes and as such I had to update some of them to adjust the values that they test with. In this exercise
+I have assumed that X represents the row and Y the column.
+
+Similarly I had to update some other tests which seemed to be testing for the wrong results, e.g. testing that 
+board dimensions were 7x7 rather than 8x8. However, I have not changed the original intention of any of the existing 
+test cases.
+
+I have also added my own test cases as part of the exercise.
