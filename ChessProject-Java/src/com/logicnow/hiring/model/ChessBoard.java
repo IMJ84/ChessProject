@@ -13,7 +13,10 @@ public class ChessBoard {
     public static final int MAX_BOARD_COLUMNS = 8;
     public static final int MAX_BOARD_ROWS = 8;
 
+    // Array representing the board and the pieces on it
     private ChessPiece[][] pieces;
+    
+    // Keeps track of how many pieces of each type there are on the board, of each colour
     private Map<PieceColour, Map<PieceType, Integer>> pieceCounts;
 
     public ChessBoard() {
